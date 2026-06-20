@@ -1,3 +1,6 @@
-# No proxy rules currently — both /amc-pathway/ and /nz-pathway/ are physically
-# served from folders inside this repo (see README.md). Add rules here only when
-# a country launches as a separate Netlify site.
+# Country pathway routing.
+# Each rule proxies a path to its own independent Netlify site so the country
+# repos can update without touching this hub. Status 200 = transparent rewrite
+# (URL bar stays at goocampusevents.com). `!` = force, overrides any local file.
+
+/nz-pathway/*  https://goocampus-nz-pathway.netlify.app/nz-pathway/:splat  200!
