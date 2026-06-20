@@ -1,2 +1,3 @@
 # NZ Pathway Handbook landing page (proxy to standalone Netlify site)
-/nz-pathway/*  https://goocampus-nz-pathway.netlify.app/:splat  200!
+# Note: path prefix preserved so Astro asset URLs (base=/nz-pathway/) resolve correctly
+/nz-pathway/*  https://goocampus-nz-pathway.netlify.app/nz-pathway/:splat  200!
