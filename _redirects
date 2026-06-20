@@ -1,0 +1,2 @@
+# NZ Pathway Handbook landing page (proxy to standalone Netlify site)
+/nz-pathway/*  https://goocampus-nz-pathway.netlify.app/:splat  200!
