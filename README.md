@@ -1,45 +1,54 @@
 # goocampus-domain-hub
 
-The source for **`goocampusevents.com`** — the homepage and the routing rules that send visitors to country-specific landing pages.
+The source for **`goocampusevents.com`** — the homepage, the country landing pages it serves, and the routing rules.
 
 This repo is connected to the Netlify project `goocampus-university-webinar` (the project name is historical — don't be fooled by it). Every push to `main` auto-deploys to `goocampusevents.com`.
 
-## What lives here
+## Layout
 
-| File | What it does |
+| Path on goocampusevents.com | Where it lives in this repo |
 |---|---|
-| `index.html` | The actual homepage of `goocampusevents.com` ("Global Opportunities for Doctors Abroad") |
-| `_redirects` | Routing rules — sends visitors of `/nz-pathway/*` and similar paths to the standalone landing pages |
-| `GC Logos.png`, `WhatsApp Image …jpeg` | Assets used by the homepage |
+| `/` | `index.html` (the "Global Opportunities for Doctors Abroad" homepage) |
+| `/amc-pathway/*` | `amc-pathway/` folder (Astro build output of [`beast-clone/amc-blueprint-landing`](https://github.com/beast-clone/amc-blueprint-landing)) |
+| `/nz-pathway/*` | proxied via `_redirects` to [`goocampus-nz-pathway.netlify.app`](https://goocampus-nz-pathway.netlify.app) |
 
-## What does NOT live here
+So this repo holds the homepage and the AMC build, and forwards NZ traffic to a standalone Netlify site.
 
-The country landing pages **are not in this repo.** They are independent deployments — this repo only forwards visitors to them.
+## How to update each section
 
-| Path on goocampusevents.com | Where the actual page lives |
-|---|---|
-| `/` | this repo (`index.html`) |
-| `/amc-pathway/*` | a separate AMC deployment (set up earlier by the team) |
-| `/nz-pathway/*` | repo: [`beast-clone/nz-pathway`](https://github.com/beast-clone/nz-pathway) → Netlify project: `goocampus-nz-pathway` → URL: `goocampus-nz-pathway.netlify.app` |
+### Homepage
+Edit `index.html` directly. Push. Netlify auto-deploys in ~30 seconds.
 
-So you can think of this repo as a **mailroom**: it greets visitors at the front door and decides which country page to send them to.
+### `/amc-pathway/` (Australia)
+1. Clone [`beast-clone/amc-blueprint-landing`](https://github.com/beast-clone/amc-blueprint-landing)
+2. Make sure `astro.config.mjs` has `base: '/amc-pathway'`
+3. Run `npm install && npm run build`
+4. Copy the contents of `dist/` into this repo's `amc-pathway/` folder (replacing existing files)
+5. Commit and push this repo. AMC re-deploys.
 
-## How to add a new country (template)
+### `/nz-pathway/` (New Zealand)
+Edit [`beast-clone/nz-pathway`](https://github.com/beast-clone/nz-pathway) directly. It auto-deploys to its own Netlify site. No change to this repo needed.
+
+## Why AMC is baked in but NZ is proxied
+
+History: AMC was deployed before the proxy pattern existed. Its build was uploaded into this repo's deployment folder, so we keep it that way.
+NZ was set up with a cleaner pattern (separate Netlify site + proxy) which lets the NZ team iterate without touching this repo.
+
+When you add the next country (UK, US, etc.), use the **NZ pattern** — it's cleaner.
+
+## Adding a new country (recommended pattern)
 
 1. Build the country landing page in its own GitHub repo (e.g. `beast-clone/uk-pathway`).
-2. Deploy it to its own Netlify project (e.g. `goocampus-uk-pathway`).
-3. Add a single line to this repo's `_redirects` file:
+2. Configure Astro with `base: '/uk-pathway/'` and add `public/_redirects` containing `/uk-pathway/*  /:splat  200!`.
+3. Deploy it to its own Netlify project (e.g. `goocampus-uk-pathway`).
+4. Add a single line to this repo's `_redirects` file:
    ```
    /uk-pathway/*  https://goocampus-uk-pathway.netlify.app/:splat  200!
    ```
-4. Push. Netlify auto-deploys this repo. `goocampusevents.com/uk-pathway/` is live in ~1 minute.
-
-The new country landing page must also build with Astro `base: '/uk-pathway/'` and include its own internal rewrite (`/uk-pathway/*  /:splat  200!`) so assets resolve correctly. See `beast-clone/nz-pathway` for the pattern.
+5. Push. `goocampusevents.com/uk-pathway/` is live in ~1 minute.
 
 ## Current `_redirects`
 
 ```
 /nz-pathway/*  https://goocampus-nz-pathway.netlify.app/:splat  200!
 ```
-
-Add more rules below the existing one — one line per country.
