@@ -6,3 +6,8 @@
 /amc-pathway/*  https://goocampus-amc-pathway.netlify.app/amc-pathway/:splat  200!
 /nz-pathway/*   https://goocampus-nz-pathway.netlify.app/nz-pathway/:splat    200!
 /gc-dashboard/* https://goocampus-dashboard.netlify.app/gc-dashboard/:splat   200!
+
+# GC Consulting — Medical PG Abroad 1:1 session (hosted on GitHub Pages).
+# 301 the bare path to a trailing slash so relative asset paths resolve.
+/gc-consulting    /gc-consulting/                                             301!
+/gc-consulting/*  https://beast-clone.github.io/10k-membership-landing/:splat  200!
