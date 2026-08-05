@@ -325,7 +325,9 @@
     body { font-size: 16px; }
     .wrap { padding-inline: 18px; }
     .card { padding: 26px; }
-    .hero-meta { flex-wrap: nowrap; gap: 13px; }
+    .hero-badge { font-size: 0.66rem; }
+    .hero-badge span:last-child { white-space: nowrap; }
+    .hero-meta { flex-wrap: nowrap; gap: 13px; justify-content: center; }
     .hero-meta .m b { font-size: 1.2rem; }
     .hero-meta .m span { font-size: 0.76rem; white-space: nowrap; }
     .hero-meta .div { align-self: stretch; }
@@ -334,7 +336,9 @@
     .btn-lg { padding: 15px 22px; }
     .hero-actions, .final-actions { width: 100%; }
     .hero-actions .btn, .final-actions .btn { flex: 1 1 100%; width: 100%; }
+    .price-body .btn { white-space: nowrap; font-size: 0.85rem; padding: 14px 16px; }
     h1 { font-size: clamp(2.1rem, 9vw, 2.7rem); }
+    .hero h1 { max-width: 340px; }
   }
 </style>
 
@@ -399,7 +403,7 @@
         <ul>
           <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 60-minute personalised consultation</li>
           <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Guidance for up to 3 countries</li>
-          <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 1:1 mentoring with a practicing specialist</li>
+          <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Mentoring session by a practicing specialist</li>
           <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Comprehensive post-session report</li>
           <li><span class="ck blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Australia &amp; New Zealand Pathway Handbook</li>
         </ul>
@@ -518,8 +522,8 @@
       </div>
       <div class="step reveal">
         <span class="big">5</span><div class="step-n">STEP 05</div>
-        <h3>1:1 Specialist Mentoring</h3>
-        <p>Connect with a practicing specialist in your target country for a personalised 1:1 mentoring session.</p>
+        <h3>Mentoring Session by a Specialist</h3>
+        <p>Connect with a practicing specialist in your target country for a personalised mentoring session.</p>
       </div>
     </div>
   </div>
@@ -656,7 +660,7 @@
         <ul>
           <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 60-minute 1:1 consultation</li>
           <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Guidance for up to three countries</li>
-          <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> 1:1 mentoring with a practicing specialist</li>
+          <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Mentoring session by a practicing specialist</li>
           <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Personalised career roadmap</li>
           <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Detailed post-session report</li>
           <li><span class="ck lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> Official resources</li>
