@@ -1,8 +1,11 @@
 # Country pathway routing.
-# Each rule proxies a path to its own independent Netlify site so the country
-# repos can update without touching this hub. Status 200 = transparent rewrite
-# (URL bar stays at goocampusevents.com). `!` = force, overrides any local file.
+# Each rule proxies a path to where that page is actually hosted. Status 200 =
+# transparent rewrite (URL bar stays at goocampusevents.com). `!` = force,
+# overrides any local file.
+# NOTE: amc-pathway & nz-pathway are Astro sites deployed on GitHub Pages
+# (astro base = /amc-pathway, /nz-pathway). Their old *.netlify.app targets are
+# dead (404), so these proxy to GitHub Pages instead.
 
-/amc-pathway/*  https://goocampus-amc-pathway.netlify.app/amc-pathway/:splat  200!
-/nz-pathway/*   https://goocampus-nz-pathway.netlify.app/nz-pathway/:splat    200!
+/amc-pathway/*  https://beast-clone.github.io/amc-pathway/:splat  200!
+/nz-pathway/*   https://beast-clone.github.io/nz-pathway/:splat   200!
 /gc-dashboard/* https://goocampus-dashboard.netlify.app/gc-dashboard/:splat   200!
