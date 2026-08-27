@@ -1,0 +1,10 @@
+# ES modules must be served with a JavaScript MIME type or the browser refuses
+# every import. Added for /samvaya-matrimony/, which ships 11 .mjs files.
+/*.mjs
+  Content-Type: text/javascript; charset=utf-8
+
+/samvaya-matrimony/assets-fx/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/samvaya-matrimony/icons/*
+  Cache-Control: public, max-age=31536000, immutable
