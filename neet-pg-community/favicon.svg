@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .tile{fill:#17344F}   /* light mode: navy tile */
+    .n12{fill:#ffffff}
+    @media (prefers-color-scheme: dark){
+      .tile{fill:#EAF1F7} /* dark mode: light tile so it pops on dark tabs */
+      .n12{fill:#17344F}
+    }
+  </style>
+  <rect class="tile" x="3" y="3" width="58" height="58" rx="15"/>
+  <text class="n12" x="25" y="44" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="31" text-anchor="middle" letter-spacing="-1.5">12</text>
+  <text x="47" y="29" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="15" fill="#2AAACB" text-anchor="middle">th</text>
+</svg>
