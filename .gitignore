@@ -1,0 +1,6 @@
+# exFAT drives sprinkle AppleDouble sidecars everywhere; they are not content.
+._*
+.DS_Store
+.Spotlight-V100
+.Trashes
+.fseventsd
