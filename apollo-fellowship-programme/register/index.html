@@ -106,22 +106,26 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 .sel-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px;border:3px solid #fff}
 .field.bad .sel-btn{border-color:var(--accent-500)}
 
-/* programme fees, sitting in the banner so the cost is the first thing seen */
-.fees{margin-top:30px}
-.fees-h{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#F8A768;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+/* programme fees - one slim line per programme, inside the banner */
+.fees{margin-top:26px}
+.fees-h{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#F8A768;display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .fees-h::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.22)}
-.fees-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fee-card{border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:20px;background:rgba(255,255,255,.09);backdrop-filter:blur(4px)}
-.fee-for{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#F8A768}
-.fee-name{font-family:var(--serif);font-size:18px;color:#fff;margin-top:7px;line-height:1.25}
-.fee-card dl{margin:15px 0 0;display:grid;gap:11px}
-.fee-card dt{font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#9FB8E4}
-.fee-card dd{margin:3px 0 0;font-size:14.5px;font-weight:600;color:#fff;line-height:1.4}
-.fee-card dd.big{font-family:var(--serif);font-size:23px;font-weight:500;line-height:1.2}
-.fee-card dd .gst{font-size:.58em;font-family:var(--sans);color:#BCCCE6;font-weight:400}
-.fee-card sup{color:#F8A768;font-size:.6em;font-family:var(--sans);top:-.7em}
-.fees-note{font-size:12.5px;color:#9FB8E4;margin-top:11px;font-style:italic}
-@media (max-width:640px){.fees-grid{grid-template-columns:1fr}}
+.fee-lines{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fee-lines li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:13px 18px}
+.fl-name{font-family:var(--serif);font-size:17px;color:#fff;line-height:1.25;flex:1 1 220px}
+.fl-name em{display:block;font-style:normal;font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#F8A768;margin-top:3px}
+.fl-facts{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font-size:14px;color:#BCCCE6}
+.fl-facts b{font-family:var(--serif);font-weight:500;font-size:19px;color:#fff}
+.fl-facts i{font-style:normal;font-size:12.5px;color:#9FB8E4}
+.fl-facts .sep{width:1px;height:13px;background:rgba(255,255,255,.25)}
+.fl-facts sup{color:#F8A768;font-size:.6em;top:-.7em}
+.fees-note{font-size:12.5px;color:#9FB8E4;margin-top:10px;font-style:italic}
+@media (max-width:640px){
+  .fee-lines li{display:block}
+  .fl-facts{margin-top:9px}
+  .fl-facts .sep{display:none}
+  .fl-facts > span{display:block}
+}
 
 /* programme highlights, same shape as the blocks on the landing page */
 .specs-wrap{margin-top:18px}
@@ -195,28 +199,24 @@ form.hide{display:none}
 
         <div class="fees">
           <p class="fees-h">Programme Fees</p>
-          <div class="fees-grid">
-            <div class="fee-card">
-              <p class="fee-for">For MBBS Graduates</p>
-              <p class="fee-name">Post MBBS Certification Programme</p>
-              <dl>
-                <div><dt>Course Fee</dt><dd class="big">₹3,00,000 <span class="gst">+ 18% GST</span></dd></div>
-                <div><dt>Monthly Stipend</dt><dd class="big">₹45,000 – ₹65,000<sup>*</sup></dd></div>
-                <div><dt>Designation</dt><dd>Academic Resident</dd></div>
-                <div><dt>Training Environment</dt><dd>Structured hospital-based clinical exposure</dd></div>
-              </dl>
-            </div>
-            <div class="fee-card">
-              <p class="fee-for">For Post Graduates</p>
-              <p class="fee-name">Post PG Advanced Fellowship Programme</p>
-              <dl>
-                <div><dt>Course Fee</dt><dd class="big">₹10,00,000 <span class="gst">+ 18% GST</span></dd></div>
-                <div><dt>Monthly Stipend</dt><dd class="big">₹1,00,000</dd></div>
-                <div><dt>Designation</dt><dd>Academic Registrar</dd></div>
-                <div><dt>Training Environment</dt><dd>Hospital-based specialised clinical exposure</dd></div>
-              </dl>
-            </div>
-          </div>
+          <ul class="fee-lines">
+            <li>
+              <span class="fl-name">Post MBBS Certification<em>For MBBS Graduates</em></span>
+              <span class="fl-facts">
+                <span><b>₹3,00,000</b> <i>+ 18% GST</i></span><span class="sep"></span>
+                <span>Stipend <b>₹45,000 – ₹65,000</b><sup>*</sup></span><span class="sep"></span>
+                <span>Academic Resident</span>
+              </span>
+            </li>
+            <li>
+              <span class="fl-name">Post PG Advanced Fellowship<em>For Post Graduates</em></span>
+              <span class="fl-facts">
+                <span><b>₹10,00,000</b> <i>+ 18% GST</i></span><span class="sep"></span>
+                <span>Stipend <b>₹1,00,000</b></span><span class="sep"></span>
+                <span>Academic Registrar</span>
+              </span>
+            </li>
+          </ul>
           <p class="fees-note">*Stipend varies depending on hospital location.</p>
         </div>
   </div>
