@@ -65,7 +65,7 @@ main{padding:38px 0 80px}
 .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
 .field{display:block}
 .field.full{grid-column:1/-1}
-.field > label,.legend{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.field > label,.field > .lbl,.legend{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
 .req{color:var(--accent-500);margin-left:2px}
 .field input{width:100%;font-family:var(--sans);font-size:15.5px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:10px;padding:13px 14px;transition:border-color .16s ease,box-shadow .16s ease}
 .field input:focus{outline:none;border-color:var(--navy-500);box-shadow:0 0 0 3px rgba(67,102,175,.15)}
@@ -87,9 +87,26 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 .opt input:checked+span{background:var(--navy-800);border-color:var(--navy-800);color:#fff}
 .opt input:focus-visible+span{box-shadow:0 0 0 3px rgba(67,102,175,.25)}
 .opt span:hover{border-color:var(--navy-500)}
-/* speciality options read as "Speciality — Location" */
-.opt .loc{display:block;font-size:13px;font-weight:400;color:var(--ink-3);margin-top:3px}
-.opt input:checked+span .loc{color:#B9CBE8}
+
+/* speciality + location is a one-line dropdown - the native select popup is
+   drawn by the OS and cannot be themed, so it is a listbox */
+.sel{position:relative}
+.sel-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:var(--sans);font-size:15.5px;font-weight:400;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:10px;padding:14px 15px;text-align:left;cursor:pointer;transition:border-color .16s ease,box-shadow .16s ease}
+.sel-btn:hover{border-color:var(--navy-500)}
+.sel-btn:focus-visible{outline:none;border-color:var(--navy-500);box-shadow:0 0 0 3px rgba(67,102,175,.18)}
+.sel.open .sel-btn{border-color:var(--navy-500);box-shadow:0 0 0 3px rgba(67,102,175,.18)}
+.sel.empty .sel-val{color:#9AA6B8}
+.sel-val{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sel-caret{flex:0 0 auto;color:var(--ink-3);transition:transform .2s ease}
+.sel.open .sel-caret{transform:rotate(180deg)}
+.sel-list{position:absolute;z-index:30;top:calc(100% + 6px);left:0;right:0;max-height:290px;overflow-y:auto;overscroll-behavior:contain;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line-2);border-radius:12px;box-shadow:0 20px 44px -20px rgba(12,34,71,.45)}
+.sel.up .sel-list{top:auto;bottom:calc(100% + 6px)}
+.sel-list li{padding:11px 13px;border-radius:8px;font-size:15px;line-height:1.35;color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sel-list li.active{background:var(--navy-050);color:var(--navy-700)}
+.sel-list li[aria-selected="true"]{background:var(--navy-800);color:#fff;font-weight:500}
+.sel-list::-webkit-scrollbar{width:9px}
+.sel-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px;border:3px solid #fff}
+.field.bad .sel-btn{border-color:var(--accent-500)}
 
 /* conditional blocks */
 .step{grid-column:1/-1;display:none}
@@ -203,31 +220,45 @@ form.hide{display:none}
           <fieldset class="field full step" id="step-prog-mbbs">
             <legend class="legend">Available Programs (Post MBBS)<span class="req">*</span></legend>
             <div class="opts stack">
-              <label class="opt"><input type="radio" name="programme_mbbs" value="Post MBBS Certification Programme"><span>Post MBBS Certification Program <span class="loc">Choose your interested specialization area and location below</span></span></label>
+              <label class="opt"><input type="radio" name="programme_mbbs" value="Post MBBS Certification Programme"><span>Post MBBS Certification Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
           </fieldset>
 
-          <fieldset class="field full step" id="step-spec-mbbs">
-            <legend class="legend">MBBS Certification Program Specialization Area and Location<span class="req">*</span></legend>
-            <div class="opts stack" id="opts-mbbs"></div>
+          <div class="field full step" id="step-spec-mbbs">
+            <span class="lbl legend" id="lbl-mbbs">MBBS Certification Program Specialization Area and Location<span class="req">*</span></span>
+            <div class="sel empty" id="sel-mbbs" data-placeholder="Select speciality and location">
+              <input type="hidden" id="spec-mbbs">
+              <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-mbbs val-mbbs">
+                <span class="sel-val" id="val-mbbs">Select speciality and location</span>
+                <svg class="sel-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.6 6 6.4 11 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="sel-list" role="listbox" aria-labelledby="lbl-mbbs" hidden></ul>
+            </div>
             <span class="err">Please choose a speciality and location.</span>
-          </fieldset>
+          </div>
 
           <!-- Post Graduate branch -->
           <fieldset class="field full step" id="step-prog-pg">
             <legend class="legend">Available Programs (Post PG)<span class="req">*</span></legend>
             <div class="opts stack">
-              <label class="opt"><input type="radio" name="programme_pg" value="Post PG Advanced Fellowship Programme"><span>Post PG Advanced Fellowship Program <span class="loc">Choose your interested specialization area and location below</span></span></label>
+              <label class="opt"><input type="radio" name="programme_pg" value="Post PG Advanced Fellowship Programme"><span>Post PG Advanced Fellowship Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
           </fieldset>
 
-          <fieldset class="field full step" id="step-spec-pg">
-            <legend class="legend">Post PG Fellowship Program Specialization Area and Location<span class="req">*</span></legend>
-            <div class="opts stack" id="opts-pg"></div>
+          <div class="field full step" id="step-spec-pg">
+            <span class="lbl legend" id="lbl-pg">Post PG Fellowship Program Specialization Area and Location<span class="req">*</span></span>
+            <div class="sel empty" id="sel-pg" data-placeholder="Select speciality and location">
+              <input type="hidden" id="spec-pg">
+              <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-pg val-pg">
+                <span class="sel-val" id="val-pg">Select speciality and location</span>
+                <svg class="sel-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.6 6 6.4 11 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="sel-list" role="listbox" aria-labelledby="lbl-pg" hidden></ul>
+            </div>
             <span class="err">Please choose a speciality and location.</span>
-          </fieldset>
+          </div>
         </div>
 
         <button type="submit" class="btn" id="submit">Submit Application</button>
@@ -284,26 +315,114 @@ form.hide{display:none}
   var $  = function(s,c){ return (c||document).querySelector(s); };
   var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
 
-  function buildOptions(host, name, list){
-    list.forEach(function(pair, i){
-      var lab = document.createElement("label");
-      lab.className = "opt";
-      var input = document.createElement("input");
-      input.type = "radio"; input.name = name;
-      input.value = pair[0] + " — " + pair[1];
-      input.dataset.speciality = pair[0];
-      input.dataset.location   = pair[1];
-      var span = document.createElement("span");
-      span.textContent = pair[0];
-      var loc = document.createElement("span");
-      loc.className = "loc"; loc.textContent = pair[1];
-      span.appendChild(loc);
-      lab.appendChild(input); lab.appendChild(span);
-      host.appendChild(lab);
+  /* ---- one-line dropdown for speciality + location -------------------- */
+  function buildListbox(rootId, list){
+    var root   = $("#" + rootId),
+        btn    = $(".sel-btn", root),
+        listEl = $(".sel-list", root),
+        valEl  = $(".sel-val", root),
+        hidden = $("input[type=hidden]", root),
+        holder = root.dataset.placeholder,
+        active = -1;
+
+    list.forEach(function(pair){
+      var li = document.createElement("li");
+      li.setAttribute("role", "option");
+      li.dataset.speciality = pair[0];
+      li.dataset.location   = pair[1];
+      li.dataset.value      = pair[0] + " — " + pair[1];
+      li.textContent        = pair[0] + " — " + pair[1];
+      listEl.appendChild(li);
     });
+
+    var items = function(){ return $$("li", listEl); };
+
+    var mark = function(i){
+      var li = items(); if (!li.length) return;
+      active = Math.max(0, Math.min(i, li.length - 1));
+      li.forEach(function(el, n){ el.classList.toggle("active", n === active); });
+      li[active].scrollIntoView({block:"nearest"});
+    };
+
+    var open = function(){
+      if (root.classList.contains("open")) return;
+      listEl.hidden = false;
+      root.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      var below = window.innerHeight - btn.getBoundingClientRect().bottom;
+      root.classList.toggle("up", below < Math.min(listEl.scrollHeight + 14, 304));
+      var sel = items().findIndex(function(el){ return el.getAttribute("aria-selected") === "true"; });
+      mark(sel < 0 ? 0 : sel);
+    };
+
+    var close = function(focus){
+      if (!root.classList.contains("open")) return;
+      listEl.hidden = true;
+      root.classList.remove("open", "up");
+      btn.setAttribute("aria-expanded", "false");
+      if (focus) btn.focus();
+    };
+
+    var pick = function(li){
+      items().forEach(function(el){ el.setAttribute("aria-selected", String(el === li)); });
+      hidden.value = li.dataset.value;
+      hidden.dataset.speciality = li.dataset.speciality;
+      hidden.dataset.location   = li.dataset.location;
+      valEl.textContent = li.textContent;
+      root.classList.remove("empty");
+      root.closest(".field").classList.remove("bad");
+      close(true);
+    };
+
+    root.reset = function(){
+      items().forEach(function(el){ el.removeAttribute("aria-selected"); el.classList.remove("active"); });
+      hidden.value = "";
+      delete hidden.dataset.speciality;
+      delete hidden.dataset.location;
+      valEl.textContent = holder;
+      root.classList.add("empty");
+      close(false);
+    };
+
+    btn.addEventListener("click", function(){
+      root.classList.contains("open") ? close(false) : open();
+    });
+    listEl.addEventListener("click", function(e){
+      var li = e.target.closest("li"); if (li) pick(li);
+    });
+    listEl.addEventListener("mousemove", function(e){
+      var li = e.target.closest("li"); if (li) mark(items().indexOf(li));
+    });
+    root.addEventListener("keydown", function(e){
+      var k = e.key;
+      if (k === "Escape"){ close(true); return; }
+      if (!root.classList.contains("open")){
+        if (k === "ArrowDown" || k === "ArrowUp" || k === "Enter" || k === " "){ e.preventDefault(); open(); }
+        return;
+      }
+      if (k === "ArrowDown"){ e.preventDefault(); mark(active + 1); }
+      else if (k === "ArrowUp"){ e.preventDefault(); mark(active - 1); }
+      else if (k === "Home"){ e.preventDefault(); mark(0); }
+      else if (k === "End"){ e.preventDefault(); mark(items().length - 1); }
+      else if (k === "Enter" || k === " "){ e.preventDefault(); var li = items()[active]; if (li) pick(li); }
+      else if (k === "Tab"){ close(false); }
+      else if (k.length === 1){
+        var q = k.toLowerCase(), li = items(), start = active + 1;
+        for (var n = 0; n < li.length; n++){
+          var c = li[(start + n) % li.length];
+          if (c.textContent.trim().toLowerCase().indexOf(q) === 0){ mark(li.indexOf(c)); break; }
+        }
+      }
+    });
+    document.addEventListener("click", function(e){
+      if (!root.contains(e.target)) close(false);
+    });
+
+    return root;
   }
-  buildOptions($("#opts-mbbs"), "spec_mbbs", MBBS_OPTIONS);
-  buildOptions($("#opts-pg"),   "spec_pg",   PG_OPTIONS);
+
+  var selMbbs = buildListbox("sel-mbbs", MBBS_OPTIONS);
+  var selPg   = buildListbox("sel-pg",   PG_OPTIONS);
 
   var stepLicence  = $("#step-licence"),
       stepProgMbbs = $("#step-prog-mbbs"),
@@ -317,7 +436,9 @@ form.hide{display:none}
     el.classList.toggle("on", !!on);
     if (!on){
       // clear anything hidden again, so a half-finished branch is never submitted
-      $$("input", el).forEach(function(i){ i.checked = false; });
+      $$("input[type=radio]", el).forEach(function(i){ i.checked = false; });
+      var sel = $(".sel", el);
+      if (sel && sel.reset) sel.reset();
       el.classList.remove("bad");
     }
   }
@@ -350,11 +471,6 @@ form.hide{display:none}
       if (box) box.classList.remove("bad");
     });
   });
-  // radios added later (speciality lists) need the same wiring
-  $$("#opts-mbbs input, #opts-pg input").forEach(function(r){
-    r.addEventListener("change", function(){ r.closest("fieldset").classList.remove("bad"); });
-  });
-
   $$("#reg input:not([type=radio])").forEach(function(el){
     el.addEventListener("input", function(){ el.closest(".field").classList.remove("bad"); });
   });
@@ -395,22 +511,22 @@ form.hide{display:none}
         programme = checked("programme_mbbs");
         check(stepProgMbbs, !!programme);
         if (programme){
-          spec = checked("spec_mbbs");
-          check(stepSpecMbbs, !!spec);
+          spec = $("#spec-mbbs");
+          check(stepSpecMbbs, !!spec.value);
         }
       }
     } else if (qual && qual.value === "Post Graduate"){
       programme = checked("programme_pg");
       check(stepProgPg, !!programme);
       if (programme){
-        spec = checked("spec_pg");
-        check(stepSpecPg, !!spec);
+        spec = $("#spec-pg");
+        check(stepSpecPg, !!spec.value);
       }
     }
 
     if (bad){
       bad.scrollIntoView({behavior:"smooth", block:"center"});
-      var f = bad.querySelector("input:not([type=radio]), input[type=radio]");
+      var f = bad.querySelector(".sel-btn, input:not([type=hidden])");
       if (f) f.focus({preventScroll:true});
       return;
     }
@@ -424,9 +540,9 @@ form.hide{display:none}
       qualification: qual.value,
       medical_licence: licence ? licence.value : "",
       programme:  programme ? programme.value : "",
-      speciality: spec ? spec.dataset.speciality : "",
-      location:   spec ? spec.dataset.location   : "",
-      speciality_location: spec ? spec.value : "",
+      speciality: (spec && spec.value) ? spec.dataset.speciality : "",
+      location:   (spec && spec.value) ? spec.dataset.location   : "",
+      speciality_location: (spec && spec.value) ? spec.value : "",
       source:   "apollo-fellowship-registration",
       page_url: window.location.href,
       submitted_at: new Date().toISOString()
