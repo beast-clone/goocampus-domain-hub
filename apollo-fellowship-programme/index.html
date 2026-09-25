@@ -195,9 +195,6 @@ nav.main a:hover::after{right:0}
 
 /* ---------- why goocampus (dark) ---------- */
 .why{background:var(--navy-900);color:#fff;padding:100px 0}
-/* the registration block is navy too, so mark the seam when they are adjacent */
-.enq + .why{border-top:1px solid rgba(255,255,255,.14);padding-top:84px}
-.enq:has(+ .why){padding-bottom:84px}
 .why h2{font-size:clamp(30px,4vw,44px);margin-top:14px;color:#fff}
 .why .lede{color:#AFC1DD;margin-top:18px;max-width:600px}
 .why-list{margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(255,255,255,.13)}
@@ -570,26 +567,6 @@ footer .brand img{height:56px}
 </section>
 
 <!-- ============ WHY CONSIDER ============ -->
-<section class="consider">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <p class="eyebrow navy">The Case for Structured Training</p>
-      <h2>Why Should You Consider These Programmes?</h2>
-      <p class="lede">Seven reasons doctors choose structured, hospital-based clinical training.</p>
-    </div>
-
-    <div class="grid7">
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V7.6a1 1 0 0 1 .55-.9l6.5-3.25a1 1 0 0 1 .9 0l6.5 3.25a1 1 0 0 1 .55.9V21"/><path d="M2.5 21h19"/><path d="M12 8.6v4.8M9.6 11h4.8"/><path d="M9.6 21v-4.2h4.8V21"/></svg></div><h3>Hospital-Based Clinical Exposure</h3><p>Gain structured clinical exposure within established hospital environments and develop practical skills and understanding in your chosen clinical area.</p></div>
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div><h3>Focused Clinical Training</h3><p>Choose a programme aligned with your area of interest and gain specialised experience through a structured clinical training environment.</p></div>
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="6.2" width="18.8" height="11.6" rx="2.4"/><circle cx="12" cy="12" r="2.8"/></svg></div><h3>Stipend During Training</h3><p>Eligible programmes offer a monthly stipend, allowing you to gain clinical experience while receiving financial support during your training.</p></div>
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9.1" r="5.3"/><path d="M8.5 13.5 7.4 21.2 12 18.7l4.6 2.5-1.1-7.7"/></svg></div><h3>Course Completion Certification</h3><p>Upon successful completion of the programme requirements, candidates will receive a Course Completion Certificate jointly awarded by Apollo Hospitals Enterprise Limited and Apollo Hospitals Educational &amp; Research Foundation (AHERF).</p></div>
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.4s6.9-5.9 6.9-11a6.9 6.9 0 1 0-13.8 0c0 5.1 6.9 11 6.9 11Z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div><h3>Multiple Programme Locations</h3><p>Explore opportunities across multiple cities and hospital locations, with programme availability varying by speciality and location.</p></div>
-      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 20.4h17.2"/><path d="M6.4 16.6l4.3-4.7 3.2 2.8L20.2 8"/><path d="M16.3 8h3.9v3.9"/></svg></div><h3>Strengthen Your Career Profile</h3><p>Develop specialised clinical experience, build professional networks and gain exposure to an established healthcare environment — helping you take a more focused next step in your medical career.</p></div>
-      <div class="rcard wide rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.6A1.6 1.6 0 0 1 5.6 4h4.6A1.8 1.8 0 0 1 12 5.8v13a1.8 1.8 0 0 0-1.8-1.8H5.6A1.6 1.6 0 0 1 4 15.4Z"/><path d="M20 5.6A1.6 1.6 0 0 0 18.4 4h-4.6A1.8 1.8 0 0 0 12 5.8v13a1.8 1.8 0 0 1 1.8-1.8h4.6a1.6 1.6 0 0 0 1.6-1.6Z"/></svg></div><div class="bd"><h3>Build a Stronger Professional Portfolio</h3><p>Go beyond clinical exposure. Depending on the programme and opportunities available, gain exposure to research, clinical audits, academic activities, presentations and other portfolio-building initiatives that can support your long-term career development.</p></div></div>
-    </div>
-  </div>
-</section>
-
 <section class="enq" id="enquiry">
   <div class="wrap enq-grid">
     <div class="rv">
@@ -623,6 +600,27 @@ footer .brand img{height:56px}
     </div>
   </div>
 </section>
+
+<section class="consider">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow navy">The Case for Structured Training</p>
+      <h2>Why Should You Consider These Programmes?</h2>
+      <p class="lede">Seven reasons doctors choose structured, hospital-based clinical training.</p>
+    </div>
+
+    <div class="grid7">
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V7.6a1 1 0 0 1 .55-.9l6.5-3.25a1 1 0 0 1 .9 0l6.5 3.25a1 1 0 0 1 .55.9V21"/><path d="M2.5 21h19"/><path d="M12 8.6v4.8M9.6 11h4.8"/><path d="M9.6 21v-4.2h4.8V21"/></svg></div><h3>Hospital-Based Clinical Exposure</h3><p>Gain structured clinical exposure within established hospital environments and develop practical skills and understanding in your chosen clinical area.</p></div>
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div><h3>Focused Clinical Training</h3><p>Choose a programme aligned with your area of interest and gain specialised experience through a structured clinical training environment.</p></div>
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="6.2" width="18.8" height="11.6" rx="2.4"/><circle cx="12" cy="12" r="2.8"/></svg></div><h3>Stipend During Training</h3><p>Eligible programmes offer a monthly stipend, allowing you to gain clinical experience while receiving financial support during your training.</p></div>
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9.1" r="5.3"/><path d="M8.5 13.5 7.4 21.2 12 18.7l4.6 2.5-1.1-7.7"/></svg></div><h3>Course Completion Certification</h3><p>Upon successful completion of the programme requirements, candidates will receive a Course Completion Certificate jointly awarded by Apollo Hospitals Enterprise Limited and Apollo Hospitals Educational &amp; Research Foundation (AHERF).</p></div>
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.4s6.9-5.9 6.9-11a6.9 6.9 0 1 0-13.8 0c0 5.1 6.9 11 6.9 11Z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div><h3>Multiple Programme Locations</h3><p>Explore opportunities across multiple cities and hospital locations, with programme availability varying by speciality and location.</p></div>
+      <div class="rcard rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 20.4h17.2"/><path d="M6.4 16.6l4.3-4.7 3.2 2.8L20.2 8"/><path d="M16.3 8h3.9v3.9"/></svg></div><h3>Strengthen Your Career Profile</h3><p>Develop specialised clinical experience, build professional networks and gain exposure to an established healthcare environment — helping you take a more focused next step in your medical career.</p></div>
+      <div class="rcard wide rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.6A1.6 1.6 0 0 1 5.6 4h4.6A1.8 1.8 0 0 1 12 5.8v13a1.8 1.8 0 0 0-1.8-1.8H5.6A1.6 1.6 0 0 1 4 15.4Z"/><path d="M20 5.6A1.6 1.6 0 0 0 18.4 4h-4.6A1.8 1.8 0 0 0 12 5.8v13a1.8 1.8 0 0 1 1.8-1.8h4.6a1.6 1.6 0 0 0 1.6-1.6Z"/></svg></div><div class="bd"><h3>Build a Stronger Professional Portfolio</h3><p>Go beyond clinical exposure. Depending on the programme and opportunities available, gain exposure to research, clinical audits, academic activities, presentations and other portfolio-building initiatives that can support your long-term career development.</p></div></div>
+    </div>
+  </div>
+</section>
+
 
 <!-- ============ WHY GOOCAMPUSWORLD ============ -->
 <section class="why" id="why">
