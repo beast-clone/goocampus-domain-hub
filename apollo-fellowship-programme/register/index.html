@@ -80,7 +80,6 @@ main{padding:38px 0 80px}
 
 fieldset{border:0;padding:0;margin:0;min-width:0}
 .opts{display:flex;flex-wrap:wrap;gap:9px}
-.opts.stack{flex-direction:column;align-items:stretch}
 .opt{position:relative;display:block}
 .opt input{position:absolute;opacity:0;width:0;height:0}
 .opt span{display:block;border:1px solid var(--line-2);border-radius:10px;padding:12px 16px;font-size:15px;font-weight:500;color:var(--ink-2);cursor:pointer;transition:all .16s ease;line-height:1.4}
@@ -219,7 +218,7 @@ form.hide{display:none}
 
           <fieldset class="field full step" id="step-prog-mbbs">
             <legend class="legend">Available Programs (Post MBBS)<span class="req">*</span></legend>
-            <div class="opts stack">
+            <div class="opts">
               <label class="opt"><input type="radio" name="programme_mbbs" value="Post MBBS Certification Programme"><span>Post MBBS Certification Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
@@ -241,7 +240,7 @@ form.hide{display:none}
           <!-- Post Graduate branch -->
           <fieldset class="field full step" id="step-prog-pg">
             <legend class="legend">Available Programs (Post PG)<span class="req">*</span></legend>
-            <div class="opts stack">
+            <div class="opts">
               <label class="opt"><input type="radio" name="programme_pg" value="Post PG Advanced Fellowship Programme"><span>Post PG Advanced Fellowship Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
