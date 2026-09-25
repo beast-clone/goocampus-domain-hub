@@ -195,6 +195,9 @@ nav.main a:hover::after{right:0}
 
 /* ---------- why goocampus (dark) ---------- */
 .why{background:var(--navy-900);color:#fff;padding:100px 0}
+/* the registration block is navy too, so mark the seam when they are adjacent */
+.enq + .why{border-top:1px solid rgba(255,255,255,.14);padding-top:84px}
+.enq:has(+ .why){padding-bottom:84px}
 .why h2{font-size:clamp(30px,4vw,44px);margin-top:14px;color:#fff}
 .why .lede{color:#AFC1DD;margin-top:18px;max-width:600px}
 .why-list{margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(255,255,255,.13)}
@@ -587,6 +590,40 @@ footer .brand img{height:56px}
   </div>
 </section>
 
+<section class="enq" id="enquiry">
+  <div class="wrap enq-grid">
+    <div class="rv">
+      <p class="eyebrow on-dark">Applications Open</p>
+      <h2>Register for the Programme</h2>
+      <p class="lede">Choose your speciality and hospital location, and submit your application. Our team will call you back with the details.</p>
+      <ul class="assure">
+        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Takes under two minutes.</li>
+        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your details go to the GooCampusWorld advisory team only.</li>
+        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Registering is not a commitment — selection is still subject to eligibility and seats.</li>
+      </ul>
+
+      <div class="support">
+        <p class="support-h">Quick Support</p>
+        <div class="support-nums">
+          <a href="tel:+919019925847"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 16.9v2.8a1.9 1.9 0 0 1-2.1 1.9 18.7 18.7 0 0 1-8.1-2.9 18.4 18.4 0 0 1-5.7-5.7A18.7 18.7 0 0 1 2.6 4.8 1.9 1.9 0 0 1 4.5 2.7h2.8a1.9 1.9 0 0 1 1.9 1.6c.12.9.35 1.78.68 2.62a1.9 1.9 0 0 1-.43 2L8.3 10.05a15.1 15.1 0 0 0 5.65 5.65l1.12-1.12a1.9 1.9 0 0 1 2-.43c.84.33 1.72.56 2.62.68a1.9 1.9 0 0 1 1.61 1.94Z"/></svg>+91 90199 25847</a>
+          <a href="tel:+918041743956"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 16.9v2.8a1.9 1.9 0 0 1-2.1 1.9 18.7 18.7 0 0 1-8.1-2.9 18.4 18.4 0 0 1-5.7-5.7A18.7 18.7 0 0 1 2.6 4.8 1.9 1.9 0 0 1 4.5 2.7h2.8a1.9 1.9 0 0 1 1.9 1.6c.12.9.35 1.78.68 2.62a1.9 1.9 0 0 1-.43 2L8.3 10.05a15.1 15.1 0 0 0 5.65 5.65l1.12-1.12a1.9 1.9 0 0 1 2-.43c.84.33 1.72.56 2.62.68a1.9 1.9 0 0 1 1.61 1.94Z"/></svg>080 4174 3956</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card rv reg-cta">
+      <p class="reg-k">Registration Form</p>
+      <h3>Two routes, one form</h3>
+      <p class="reg-p">Tell us whether you hold an MBBS or a PG qualification, and the form shows only the programmes you are eligible for — each one with its speciality and hospital location.</p>
+      <ul class="reg-list">
+        <li><b>MBBS Graduates</b><span>Post MBBS Certification Programme — 10 speciality and location options</span></li>
+        <li><b>Post Graduates</b><span>Post PG Advanced Fellowship Programme — 12 speciality and location options</span></li>
+      </ul>
+      <a class="btn btn-primary" href="register/">Register Now <svg class="arw" width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WHY GOOCAMPUSWORLD ============ -->
 <section class="why" id="why">
   <div class="wrap">
@@ -658,39 +695,7 @@ footer .brand img{height:56px}
 </section>
 
 <!-- ============ ENQUIRY ============ -->
-<section class="enq" id="enquiry">
-  <div class="wrap enq-grid">
-    <div class="rv">
-      <p class="eyebrow on-dark">Applications Open</p>
-      <h2>Register for the Programme</h2>
-      <p class="lede">Choose your speciality and hospital location, and submit your application. Our team will call you back with the details.</p>
-      <ul class="assure">
-        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Takes under two minutes.</li>
-        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your details go to the GooCampusWorld advisory team only.</li>
-        <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="8.5" cy="8.5" r="7.6" stroke="#6D8FCB" stroke-width="1.4"/><path d="m5.3 8.7 2.2 2.2 4.2-4.5" stroke="#6D8FCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Registering is not a commitment — selection is still subject to eligibility and seats.</li>
-      </ul>
 
-      <div class="support">
-        <p class="support-h">Quick Support</p>
-        <div class="support-nums">
-          <a href="tel:+919019925847"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 16.9v2.8a1.9 1.9 0 0 1-2.1 1.9 18.7 18.7 0 0 1-8.1-2.9 18.4 18.4 0 0 1-5.7-5.7A18.7 18.7 0 0 1 2.6 4.8 1.9 1.9 0 0 1 4.5 2.7h2.8a1.9 1.9 0 0 1 1.9 1.6c.12.9.35 1.78.68 2.62a1.9 1.9 0 0 1-.43 2L8.3 10.05a15.1 15.1 0 0 0 5.65 5.65l1.12-1.12a1.9 1.9 0 0 1 2-.43c.84.33 1.72.56 2.62.68a1.9 1.9 0 0 1 1.61 1.94Z"/></svg>+91 90199 25847</a>
-          <a href="tel:+918041743956"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 16.9v2.8a1.9 1.9 0 0 1-2.1 1.9 18.7 18.7 0 0 1-8.1-2.9 18.4 18.4 0 0 1-5.7-5.7A18.7 18.7 0 0 1 2.6 4.8 1.9 1.9 0 0 1 4.5 2.7h2.8a1.9 1.9 0 0 1 1.9 1.6c.12.9.35 1.78.68 2.62a1.9 1.9 0 0 1-.43 2L8.3 10.05a15.1 15.1 0 0 0 5.65 5.65l1.12-1.12a1.9 1.9 0 0 1 2-.43c.84.33 1.72.56 2.62.68a1.9 1.9 0 0 1 1.61 1.94Z"/></svg>080 4174 3956</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card rv reg-cta">
-      <p class="reg-k">Registration Form</p>
-      <h3>Two routes, one form</h3>
-      <p class="reg-p">Tell us whether you hold an MBBS or a PG qualification, and the form shows only the programmes you are eligible for — each one with its speciality and hospital location.</p>
-      <ul class="reg-list">
-        <li><b>MBBS Graduates</b><span>Post MBBS Certification Programme — 10 speciality and location options</span></li>
-        <li><b>Post Graduates</b><span>Post PG Advanced Fellowship Programme — 12 speciality and location options</span></li>
-      </ul>
-      <a class="btn btn-primary" href="register/">Register Now <svg class="arw" width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M1 6h12M9 1.5 13.5 6 9 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    </div>
-  </div>
-</section>
 
 </main>
 
