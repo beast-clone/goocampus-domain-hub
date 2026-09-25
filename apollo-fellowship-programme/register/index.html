@@ -106,6 +106,23 @@ fieldset{border:0;padding:0;margin:0;min-width:0}
 .sel-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px;border:3px solid #fff}
 .field.bad .sel-btn{border-color:var(--accent-500)}
 
+/* programme fees, shown up front so the cost is visible before choosing */
+.fees{margin-bottom:28px}
+.fees-h{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.fees-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.fees-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fee-card{border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff}
+.fee-for{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-500)}
+.fee-name{font-family:var(--serif);font-size:19px;color:var(--navy-800);margin-top:7px;line-height:1.25}
+.fee-card dl{margin:16px 0 0;display:grid;gap:12px}
+.fee-card dt{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.fee-card dd{margin:3px 0 0;font-size:15px;font-weight:600;color:var(--navy-800);line-height:1.4}
+.fee-card dd.big{font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.2}
+.fee-card dd .gst{font-size:.6em;font-family:var(--sans);color:var(--ink-3);font-weight:400}
+.fee-card sup{color:var(--accent-500);font-size:.6em;font-family:var(--sans);top:-.7em}
+.fees-note{font-size:12.5px;color:var(--ink-3);margin-top:11px;font-style:italic}
+@media (max-width:640px){.fees-grid{grid-template-columns:1fr}}
+
 /* programme highlights, same shape as the blocks on the landing page */
 .specs-wrap{margin-top:18px}
 .specs-h{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -181,6 +198,33 @@ form.hide{display:none}
 <main>
   <div class="wrap">
     <div class="card">
+      <div class="fees">
+        <p class="fees-h">Programme Fees</p>
+        <div class="fees-grid">
+          <div class="fee-card">
+            <p class="fee-for">For MBBS Graduates</p>
+            <p class="fee-name">Post MBBS Certification Programme</p>
+            <dl>
+              <div><dt>Course Fee</dt><dd class="big">₹3,00,000 <span class="gst">+ 18% GST</span></dd></div>
+              <div><dt>Monthly Stipend</dt><dd class="big">₹45,000 – ₹65,000<sup>*</sup></dd></div>
+              <div><dt>Designation</dt><dd>Academic Resident</dd></div>
+              <div><dt>Training Environment</dt><dd>Structured hospital-based clinical exposure</dd></div>
+            </dl>
+          </div>
+          <div class="fee-card">
+            <p class="fee-for">For Post Graduates</p>
+            <p class="fee-name">Post PG Advanced Fellowship Programme</p>
+            <dl>
+              <div><dt>Course Fee</dt><dd class="big">₹10,00,000 <span class="gst">+ 18% GST</span></dd></div>
+              <div><dt>Monthly Stipend</dt><dd class="big">₹1,00,000</dd></div>
+              <div><dt>Designation</dt><dd>Academic Registrar</dd></div>
+              <div><dt>Training Environment</dt><dd>Hospital-based specialised clinical exposure</dd></div>
+            </dl>
+          </div>
+        </div>
+        <p class="fees-note">*Stipend varies depending on hospital location.</p>
+      </div>
+
       <form id="reg" novalidate>
         <div class="sec-bar">Registrant Details</div>
 
@@ -235,16 +279,6 @@ form.hide{display:none}
               <label class="opt"><input type="radio" name="programme_mbbs" value="Post MBBS Certification Programme"><span>Post MBBS Certification Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
-            <div class="specs-wrap">
-              <p class="specs-h">Programme Highlights</p>
-              <div class="specs">
-                <div class="spec"><div class="k">Course Fee</div><div class="v">₹3,00,000 <span class="gst">+ 18% GST</span></div></div>
-                <div class="spec"><div class="k">Monthly Stipend</div><div class="v">₹45,000 – ₹65,000<sup>*</sup></div></div>
-                <div class="spec"><div class="k">Designation</div><div class="v sm">Academic Resident</div></div>
-                <div class="spec"><div class="k">Training Environment</div><div class="v sm">Structured hospital-based clinical exposure</div></div>
-              </div>
-              <p class="specs-note">*Stipend varies depending on hospital location.</p>
-            </div>
           </fieldset>
 
           <div class="field full step" id="step-spec-mbbs">
@@ -267,15 +301,6 @@ form.hide{display:none}
               <label class="opt"><input type="radio" name="programme_pg" value="Post PG Advanced Fellowship Programme"><span>Post PG Advanced Fellowship Program</span></label>
             </div>
             <span class="err">Please select the programme.</span>
-            <div class="specs-wrap">
-              <p class="specs-h">Programme Highlights</p>
-              <div class="specs">
-                <div class="spec"><div class="k">Course Fee</div><div class="v">₹10,00,000 <span class="gst">+ 18% GST</span></div></div>
-                <div class="spec"><div class="k">Monthly Stipend</div><div class="v">₹1,00,000</div></div>
-                <div class="spec"><div class="k">Designation</div><div class="v sm">Academic Registrar</div></div>
-                <div class="spec"><div class="k">Training Environment</div><div class="v sm">Hospital-based specialised clinical exposure</div></div>
-              </div>
-            </div>
           </fieldset>
 
           <div class="field full step" id="step-spec-pg">
