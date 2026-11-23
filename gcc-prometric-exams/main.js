@@ -111,26 +111,26 @@
   const ccList = form.querySelector('[data-cc-list]');
   const ccFlag = form.querySelector('[data-cc-flag]');
   const flagOf = iso => iso.replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
-  const ccItems = [...ccSelect.options].map(o => {
+  const ccItems = [...ccSelect.options].map((o, idx) => {
     const li = document.createElement('li');
     li.setAttribute('role', 'option'); li.tabIndex = -1; li.dataset.value = o.value;
     li.innerHTML = `<span class="cc__flag">${flagOf(o.dataset.iso)}</span><span class="cc__name">${o.textContent}</span><span class="cc__code">+${o.value}</span>`;
-    li.addEventListener('click', () => pickCc(o.value));
+    li.addEventListener('click', () => pickCc(idx));
     ccList.append(li);
-    return { li, value: o.value, text: (o.textContent + ' ' + o.value + ' +' + o.value).toLowerCase(), iso: o.dataset.iso };
+    return { li, idx, value: o.value, text: (o.textContent + ' ' + o.value + ' +' + o.value).toLowerCase(), iso: o.dataset.iso };
   });
-  const markCc = () => ccItems.forEach(it => it.li.setAttribute('aria-selected', String(it.value === ccSelect.value)));
+  const markCc = () => ccItems.forEach(it => it.li.setAttribute('aria-selected', String(it.idx === ccSelect.selectedIndex)));
   function openCc() {
     if (ccSelect.disabled) return;
     ccPanel.hidden = false; ccBtn.setAttribute('aria-expanded', 'true');
     ccSearch.value = ''; ccItems.forEach(it => { it.li.hidden = false; });
     markCc(); ccSearch.focus();
-    const cur = ccItems.find(it => it.value === ccSelect.value); if (cur) cur.li.scrollIntoView({ block: 'nearest' });
+    const cur = ccItems[ccSelect.selectedIndex]; if (cur) cur.li.scrollIntoView({ block: 'nearest' });
   }
   function closeCc() { ccPanel.hidden = true; ccBtn.setAttribute('aria-expanded', 'false'); }
-  function pickCc(v) {
-    ccSelect.value = v; ccSelect.dispatchEvent(new Event('change'));
-    const it = ccItems.find(x => x.value === v); if (it) ccFlag.textContent = flagOf(it.iso);
+  function pickCc(idx) {
+    ccSelect.selectedIndex = idx; ccSelect.dispatchEvent(new Event('change'));
+    const it = ccItems[idx]; if (it) ccFlag.textContent = flagOf(it.iso);
     closeCc(); phoneInput.focus();
   }
   ccBtn.addEventListener('click', () => (ccPanel.hidden ? openCc() : closeCc()));
@@ -140,7 +140,7 @@
   });
   ccSearch.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeCc(); ccBtn.focus(); }
-    if (e.key === 'Enter') { e.preventDefault(); const first = ccItems.find(it => !it.li.hidden); if (first) pickCc(first.value); }
+    if (e.key === 'Enter') { e.preventDefault(); const first = ccItems.find(it => !it.li.hidden); if (first) pickCc(first.idx); }
   });
   document.addEventListener('click', e => { if (!ccPanel.hidden && !e.target.closest('[data-cc-picker]')) closeCc(); });
 
