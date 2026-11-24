@@ -6,6 +6,9 @@
 # (astro base = /amc-pathway, /nz-pathway). Their old *.netlify.app targets are
 # dead (404), so these proxy to GitHub Pages instead.
 
-/amc-pathway/*  https://beast-clone.github.io/amc-pathway/:splat  200!
-/nz-pathway/*   https://beast-clone.github.io/nz-pathway/:splat   200!
+# 24 Nov 2026: the Australia and NZ ebook pages moved to ebooks.goocampusglobal.com (permanent redirects)
+/amc-pathway    https://ebooks.goocampusglobal.com/australia/    301!
+/amc-pathway/*  https://ebooks.goocampusglobal.com/australia/    301!
+/nz-pathway     https://ebooks.goocampusglobal.com/new-zealand/  301!
+/nz-pathway/*   https://ebooks.goocampusglobal.com/new-zealand/  301!
 /gc-dashboard/* https://goocampus-dashboard.netlify.app/gc-dashboard/:splat   200!
