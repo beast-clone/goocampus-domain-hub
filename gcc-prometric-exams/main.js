@@ -17,7 +17,7 @@
   else {
     const io = new IntersectionObserver(entries => entries.forEach(en => {
       if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-    }), { rootMargin: '0px 0px -8% 0px' });
+    }), { rootMargin: '0px 0px 25% 0px' }); // start fading in just before text scrolls into view, so phones never show blank space
     items.forEach(el => io.observe(el));
   }
   setTimeout(() => document.querySelectorAll('[data-fill]').forEach(b => { b.style.width = b.dataset.fill; }), 150);
@@ -45,6 +45,50 @@
     goCity(0); play();
   }
 
+  /* ---------- join section: programmes slideshow (endless loop) ---------- */
+  const progShow = document.querySelector('.prog-show');
+  if (progShow) {
+    const track = progShow.querySelector('[data-prog-track]');
+    const cards = [...track.children];
+    const n = cards.length;
+    // A copy of the first card sits after the last one, so 3 -> 1 keeps sliding forward instead of rewinding.
+    const clone = cards[0].cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.append(clone);
+    const tabs = [...progShow.querySelectorAll('.prog-tab')];
+    const DELAY = 5000;
+    let cur = 0, timer, hold = false;
+    const x = i => i * track.clientWidth;
+    const mark = i => tabs.forEach((t, k) => { t.classList.toggle('is-on', k === i); t.setAttribute('aria-selected', k === i); });
+    const jump = left => { track.style.scrollBehavior = 'auto'; track.scrollLeft = left; track.style.scrollBehavior = ''; };
+    const goProg = i => {
+      if (i < 0) { jump(x(n)); i = n - 1; }            // going back from the first card: hop to the copy, then slide back
+      cur = i;
+      track.scrollTo({ left: x(i), behavior: reduced ? 'auto' : 'smooth' });
+      mark(i % n);
+    };
+    let settle;
+    track.addEventListener('scroll', () => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      mark(i % n);
+      clearTimeout(settle);
+      settle = setTimeout(() => {                         // landed on the copy: swap to the real first card
+        const k = Math.round(track.scrollLeft / track.clientWidth);
+        if (k >= n) { jump(0); cur = 0; } else cur = k;
+      }, 120);
+    }, { passive: true });
+    const play = () => { clearInterval(timer); if (!reduced) timer = setInterval(() => { if (!hold && !document.hidden) goProg(cur + 1); }, DELAY); };
+    tabs.forEach((t, i) => t.addEventListener('click', () => { goProg(i); play(); }));
+    progShow.querySelector('[data-prog-prev]').addEventListener('click', () => { goProg(cur - 1); play(); });
+    progShow.querySelector('[data-prog-next]').addEventListener('click', () => { goProg(cur + 1); play(); });
+    progShow.addEventListener('mouseenter', () => { hold = true; });
+    progShow.addEventListener('mouseleave', () => { hold = false; });
+    track.addEventListener('touchstart', () => { hold = true; }, { passive: true });
+    track.addEventListener('touchend', () => { hold = false; play(); }, { passive: true });
+    window.addEventListener('resize', () => jump(x(cur)));
+    play();
+  }
+
   /* ---------- authority rows switch the city photo ---------- */
   const rows = [...document.querySelectorAll('button.auth__row')];
   const photos = [...document.querySelectorAll('.auth__photo img')];
@@ -59,7 +103,6 @@
   if (!form) return;
   const steps = [...form.querySelectorAll('.step')];
   const fmgStep = form.querySelector('[data-fmg]');
-  const dates = form.querySelector('[data-dates]');
   const back = form.querySelector('[data-back]');
   const next = form.querySelector('[data-next]');
   const submit = form.querySelector('[data-submit]');
@@ -67,20 +110,37 @@
   const count = form.querySelector('[data-count]');
   const bar = form.querySelector('[data-progress]');
   const thanks = document.querySelector('[data-thanks]');
-  // Only the 12 November webinar is open for registration; the rest are shown as "Planned".
-  // 26 Nov is open for every profession; 12 Nov is over; 3 Dec (GPs) is planned.
-  const OPEN = 'Thursday, 26th November 2026';
-  const CLOSED = ['Thursday, 12th November 2026'];
-  const SESSIONS = {
-    'MBBS (India)': ['Thursday, 12th November 2026', OPEN, 'Thursday, 3rd December 2026'],
-    'MBBS (Abroad, FMG)': ['Thursday, 12th November 2026', OPEN, 'Thursday, 3rd December 2026'],
-    'BDS (Dentist)': [OPEN],
-    'BAMS (Ayurveda)': [OPEN],
-    'BHMS (Homeopathy)': [OPEN],
-    'BUMS (Unani)': [OPEN],
-  };
-  const dateNote = form.querySelector('[data-date-note]');
   let at = 0;
+
+  /* ---------- what they are interested in: batch, DataFlow & PSV or Job Support ---------- */
+  // The lead goes to the same n8n webhook as before. n8n only books Zoom for a webinar date, so these
+  // tags just land in the Website Leads sheet ("Webinar" column) for the counsellor to follow up.
+  const INTEREST = {
+    batch:    { title: 'Register for the batch', submit: 'Join the Batch', tag: 'Batch enrolment (9 Dec 2026 batch)', slide: 0,
+                thanks: 'Our counsellor will message you on WhatsApp shortly about the <b>9th December 2026</b> batch.', pay: true },
+    dataflow: { title: 'Enquire about DataFlow & PSV', submit: 'Send my details', tag: 'Enquiry: DataFlow & PSV', slide: 1,
+                thanks: 'Our counsellor will message you on WhatsApp shortly about <b>DataFlow &amp; PSV</b>: the process, documents and pricing.', pay: false },
+    jobs:     { title: 'Enquire about Job Support', submit: 'Send my details', tag: 'Enquiry: Job Support & Career Advancement', slide: 2,
+                thanks: 'Our counsellor will message you on WhatsApp shortly about the <b>Job Support &amp; Career Advancement</b> package and its pricing.', pay: false },
+  };
+  const formTitle = form.querySelector('[data-form-title]');
+  const interestTag = form.querySelector('[data-interest-tag]');
+  const thanksText = thanks.querySelector('[data-thanks-text]');
+  const thanksPay = thanks.querySelector('[data-thanks-pay]');
+  const setInterest = (key, fromLink) => {
+    const it = INTEREST[key] || INTEREST.batch;
+    const radio = form.querySelector(`input[name="interest"][data-key="${key}"]`);
+    if (radio) radio.checked = true;
+    formTitle.textContent = it.title;
+    interestTag.value = it.tag;
+    const sub = form.querySelector('[data-submit]');
+    sub.lastChild.textContent = it.submit;
+    thanksText.innerHTML = it.thanks;
+    thanksPay.hidden = !it.pay;
+    if (fromLink) { const tab = document.querySelectorAll('.prog-tab')[it.slide]; if (tab) tab.click(); }
+  };
+  form.querySelectorAll('input[name="interest"]').forEach(r => r.addEventListener('change', () => setInterest(r.dataset.key, true)));
+  document.querySelectorAll('a[data-interest]').forEach(a => a.addEventListener('click', () => setInterest(a.dataset.interest, true)));
   const val = name => { const r = form.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ''; };
   const isFmg = () => val('profession') === 'MBBS (Abroad, FMG)';
   const path = () => steps.filter(s => s !== fmgStep || isFmg());
@@ -243,7 +303,7 @@
   form.addEventListener('input', e => { const f = e.target.closest('.field'); if (f) f.classList.remove('is-invalid'); });
   form.addEventListener('change', e => {
     if (e.target.type === 'radio') { const err = errFor(e.target); if (err) err.classList.remove('show'); }
-    if (e.target.name === 'profession') { fmgStep.disabled = !isFmg(); fillDates(); show(at); }
+    if (e.target.name === 'profession') { fmgStep.disabled = !isFmg(); show(at); }
   });
 
   function show(i) {
@@ -264,70 +324,9 @@
   next.addEventListener('click', () => go(1));
   back.addEventListener('click', () => go(-1));
 
-  function fillDates() {
-    const list = SESSIONS[val('profession')] || [];
-    const hasOpen = !!OPEN && list.includes(OPEN);
-    dates.replaceChildren(...list.map(d => {
-      if (d === OPEN) {
-        const label = document.createElement('label');
-        label.className = 'choice';
-        label.innerHTML = `<input type="radio" name="webinar_date" value="${d}, 4 PM to 5 PM IST" required checked><span>${d}</span>`;
-        return label;
-      }
-      const closed = CLOSED.includes(d);
-      const row = document.createElement('div');
-      row.className = 'choice--planned' + (closed ? ' is-closed' : '');
-      row.setAttribute('aria-disabled', 'true');
-      row.innerHTML = closed ? `<span>${d}</span><em class="date-tag date-tag--closed">Closed</em>` : `<span>${d}</span><em class="date-tag">Planned</em>`;
-      return row;
-    }));
-    if (!list.length) {
-      // No webinar date for this profession yet: keep the interest.
-      const keep = document.createElement('input');
-      keep.type = 'hidden'; keep.name = 'webinar_date'; keep.value = 'Date to be announced';
-      dates.append(keep);
-      dateNote.textContent = 'The webinar date for your profession will be announced soon. Submit your details and we will message you on WhatsApp.';
-      dateNote.hidden = false;
-    } else if (!hasOpen) {
-      // Nothing bookable yet: keep the interest, tell them we will message once registration opens.
-      const keep = document.createElement('input');
-      keep.type = 'hidden'; keep.name = 'webinar_date'; keep.value = list.find(d => !CLOSED.includes(d)) || list[0];
-      dates.append(keep);
-      dateNote.textContent = 'Registration for this webinar opens soon. Submit your details and we will message you on WhatsApp as soon as it opens.';
-      dateNote.hidden = false;
-    } else {
-      dateNote.hidden = true;
-    }
-  }
-
-  const thanksTitle = thanks.querySelector('[data-thanks-title]');
-  const thanksText = thanks.querySelector('[data-thanks-text]');
-  const thanksLink = thanks.querySelector('[data-thanks-link]');
-  const thanksNote = thanks.querySelector('[data-thanks-note]');
-  function done(res, picked) {
+  // Batch registration: the lead is saved and our counsellor follows up on WhatsApp.
+  function done() {
     form.hidden = true;
-    if (res && res.registered && res.join_url) {
-      thanksTitle.textContent = "You're registered!";
-      thanksText.innerHTML = 'Your webinar is on <b>' + (picked || OPEN) + '</b>, 4 PM to 5 PM IST.';
-      thanksLink.href = res.join_url; thanksLink.hidden = false;
-      thanksNote.textContent = "You'll also get this link on WhatsApp and by email from Zoom. Please save it for the day.";
-    } else if (res && res.live && res.reg_url) {
-      thanksTitle.textContent = 'One last step';
-      thanksText.innerHTML = 'Complete your Zoom registration for <b>' + (picked || OPEN) + '</b>, 4 PM to 5 PM IST.';
-      thanksLink.href = res.reg_url; thanksLink.hidden = false;
-      thanksLink.lastChild.textContent = 'Complete Zoom registration';
-      thanksNote.textContent = 'Zoom will then email you your personal joining link.';
-    } else if (res && res.live === false) {
-      thanksTitle.textContent = 'Thank you, we have your details';
-      thanksText.innerHTML = picked && picked !== 'Date to be announced' ? 'Your webinar on <b>' + picked + '</b> is planned.' : 'The webinar date for your profession will be announced soon.';
-      thanksLink.hidden = true;
-      thanksNote.textContent = 'We will message you on WhatsApp as soon as registration opens.';
-    } else {
-      thanksTitle.textContent = 'Thank you, we have your details';
-      thanksText.textContent = 'Our team will send you the joining link for your webinar shortly.';
-      thanksLink.hidden = true;
-      thanksNote.textContent = 'Please keep an eye on WhatsApp and your email.';
-    }
     thanks.hidden = false; thanks.focus();
   }
 
@@ -340,7 +339,6 @@
     const data = new URLSearchParams(new FormData(form));
     data.set('contact_number', '+' + fullPhone());
     data.delete('country_code');
-    const picked = (data.get('webinar_date') || '').replace(', 4 PM to 5 PM IST', '');
     submit.disabled = true; status.textContent = 'Registering you…';
     let res = null;
     try {
@@ -350,7 +348,7 @@
       // n8n unreachable: still save the lead to the sheet so nobody is lost.
       try {
         await fetch(fallback, { method: 'POST', mode: 'no-cors', body: data });
-        done(null, picked);
+        done();
       } catch {
         status.textContent = 'Could not send. Please check your connection and try again.';
       }
@@ -358,7 +356,7 @@
       return;
     }
     if (res && res.ok) {
-      done(res, picked);
+      done();
     } else if (res && res.error === 'verify') {
       resetOtp(); show(0);
       say('Please verify your WhatsApp number again to continue.', 'bad');
